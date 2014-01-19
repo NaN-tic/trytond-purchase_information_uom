@@ -1,0 +1,51 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:purchase.line,currency_digits:"
+msgid "Currency Digits"
+msgstr "Decimals de moneda"
+
+msgctxt "field:purchase.line,info_amount:"
+msgid "Information Amount"
+msgstr "Import UdM Informativa"
+
+msgctxt "field:purchase.line,info_quantity:"
+msgid "Information Quantity"
+msgstr "Quantitat UdM Informativa"
+
+msgctxt "field:purchase.line,info_unit:"
+msgid "Information UOM"
+msgstr "UdM Informativa"
+
+msgctxt "field:purchase.line,info_unit_digits:"
+msgid "Information Unit Digits"
+msgstr "Digits UdM Informativa"
+
+msgctxt "field:purchase.line,info_unit_price:"
+msgid "Information Unit Price"
+msgstr "Preu unitari UdM Informativa"
+
+msgctxt "field:purchase.line,show_info_unit:"
+msgid "Show Information UOM"
+msgstr "Mostrar UdM Informativa"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Canceled"
+msgstr "Cancel·lat"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Confirmed"
+msgstr "Confirmat"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Done"
+msgstr "Realitzat"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Draft"
+msgstr "Esborrany"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Quotation"
+msgstr "Pressupost"

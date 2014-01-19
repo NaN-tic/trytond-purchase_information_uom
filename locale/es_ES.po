@@ -1,0 +1,51 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:purchase.line,currency_digits:"
+msgid "Currency Digits"
+msgstr "Decimales de moneda"
+
+msgctxt "field:purchase.line,info_amount:"
+msgid "Information Amount"
+msgstr "Import UdM Informativa"
+
+msgctxt "field:purchase.line,info_quantity:"
+msgid "Information Quantity"
+msgstr "Cantidad UdM Informativa"
+
+msgctxt "field:purchase.line,info_unit:"
+msgid "Information UOM"
+msgstr "UdM Informativa"
+
+msgctxt "field:purchase.line,info_unit_digits:"
+msgid "Information Unit Digits"
+msgstr "Digitos UdM Informativa"
+
+msgctxt "field:purchase.line,info_unit_price:"
+msgid "Information Unit Price"
+msgstr "Precio unitario UdM Informativa"
+
+msgctxt "field:purchase.line,show_info_unit:"
+msgid "Show Information UOM"
+msgstr "Mostrar UdM Informativa"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Canceled"
+msgstr "Cancelado"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Confirmed"
+msgstr "Confirmado"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Done"
+msgstr "Realizado"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Draft"
+msgstr "Borrador"
+
+msgctxt "selection:purchase.line,purchase_state:"
+msgid "Quotation"
+msgstr "Presupuesto"
