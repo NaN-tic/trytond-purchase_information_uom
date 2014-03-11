@@ -167,10 +167,10 @@ Create product::
     >>> template.account_expense = expense
     >>> template.account_revenue = revenue
     >>> template.save()
-    >>> template.info_cost_price
-    Decimal('10.0000')
-    >>> template.info_list_price
-    Decimal('20.0000')
+    >>> template.info_cost_price == Decimal('10.0000')
+    True
+    >>> template.info_list_price == Decimal('20.0000')
+    True
     >>> product.template = template
     >>> product.save()
 
