@@ -1,5 +1,6 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
+from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.modules.account_invoice_information_uom import InformationUomMixin
 
@@ -10,22 +11,13 @@ __metaclass__ = PoolMeta
 class PurchaseLine(InformationUomMixin):
     __name__ = 'purchase.line'
 
-    @classmethod
-    def __setup__(cls):
-        super(PurchaseLine, cls).__setup__()
-        for value in cls.amount.on_change_with:
-            if value not in cls.info_quantity.on_change:
-                cls.info_quantity.on_change.append(value)
-            if value not in cls.info_unit_price.on_change:
-                cls.info_unit_price.on_change.append(value)
-        if not 'purchase' in cls.currency_digits.on_change_with:
-            cls.currency_digits.on_change_with.append('purchase')
-
+    @fields.depends('purchase')
     def on_change_with_currency_digits(self, name=None):
         if self.purchase:
             return self.purchase.currency_digits
         return 2
 
+    @fields.depends('product', 'unit_price', 'unit')
     def on_change_with_info_unit_price(self, name=None):
         super(PurchaseLine, self).on_change_with_info_unit_price(name)
         if not self.product:
