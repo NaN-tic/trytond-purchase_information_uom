@@ -211,14 +211,10 @@ Purchase 5 products::
     True
     >>> purchase_line.amount == Decimal('100.0000')
     True
-    >>> purchase_line.amount == purchase_line.info_amount
-    True
     >>> purchase_line.unit_price = Decimal('25')
     >>> purchase_line.info_unit_price ==  Decimal('12.5')
     True
     >>> purchase_line.amount == Decimal('125.00')
-    True
-    >>> purchase_line.amount == purchase_line.info_amount
     True
     >>> purchase.save()
     >>> Purchase.quote([purchase.id], config.context)
