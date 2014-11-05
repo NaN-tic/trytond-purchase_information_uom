@@ -215,10 +215,11 @@ Purchase 5 products::
     >>> purchase_line.amount == Decimal('125.00')
     True
     >>> purchase.save()
-    >>> Purchase.quote([purchase.id], config.context)
-    >>> Purchase.confirm([purchase.id], config.context)
+    >>> purchase.click('quote')
+    >>> purchase.click('confirm')
+    >>> purchase.click('process')
     >>> purchase.state
-    u'confirmed'
+    u'processing'
     >>> purchase.reload()
     >>> len(purchase.invoices) == 1
     True
