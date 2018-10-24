@@ -6,9 +6,8 @@ from ..account_invoice_information_uom.invoice import InformationUomMixin
 __all__ = ['PurchaseLine']
 
 
-class PurchaseLine(InformationUomMixin):
+class PurchaseLine(InformationUomMixin, metaclass=PoolMeta):
     __name__ = 'purchase.line'
-    __metaclass__ = PoolMeta
 
     def get_invoice_line(self):
         lines = super(PurchaseLine, self).get_invoice_line()

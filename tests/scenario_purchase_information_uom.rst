@@ -173,7 +173,7 @@ Purchase 5 products::
     >>> purchase.click('confirm')
     >>> purchase.click('process')
     >>> purchase.state
-    u'processing'
+    'processing'
     >>> purchase.reload()
     >>> len(purchase.invoices) == 1
     True
