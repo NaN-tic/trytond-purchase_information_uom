@@ -4,28 +4,17 @@
 import unittest
 import doctest
 import trytond.tests.test_tryton
-from trytond.tests.test_tryton import test_view, test_depends
+from trytond.tests.test_tryton import ModuleTestCase
 from trytond.tests.test_tryton import doctest_setup, doctest_teardown
 
 
-class TestCase(unittest.TestCase):
-    'Test module'
-
-    def setUp(self):
-        trytond.tests.test_tryton.install_module('purchase_information_uom')
-
-    def test0005views(self):
-        'Test views'
-        test_view('purchase_information_uom')
-
-    def test0006depends(self):
-        'Test depends'
-        test_depends()
-
+class PurchaseInformationUomTestCase(ModuleTestCase):
+    'Test PurchaseInformationUom module'
+    module = 'purchase_information_uom'
 
 def suite():
     suite = trytond.tests.test_tryton.suite()
-    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestCase))
+    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(PurchaseInformationUomTestCase))
     suite.addTests(doctest.DocFileSuite(
             'scenario_purchase_information_uom.rst',
             setUp=doctest_setup, tearDown=doctest_teardown, encoding='utf-8',
