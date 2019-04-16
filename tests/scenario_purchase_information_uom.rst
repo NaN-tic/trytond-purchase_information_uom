@@ -171,7 +171,6 @@ Purchase 5 products::
     >>> purchase.save()
     >>> purchase.click('quote')
     >>> purchase.click('confirm')
-    >>> purchase.click('process')
     >>> purchase.state
     'processing'
     >>> purchase.reload()
@@ -192,4 +191,3 @@ Uom information data is copied to invoice::
     True
     >>> invoice_line.amount == Decimal('125.00')
     True
-
