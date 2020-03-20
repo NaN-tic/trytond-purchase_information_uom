@@ -8,3 +8,7 @@ def register():
     Pool.register(
         purchase.PurchaseLine,
         module='purchase_information_uom', type_='model')
+    Pool.register(
+        purchase.CreatePurchase,
+        depends=['purchase_request'],
+        module='purchase_information_uom', type_='wizard')

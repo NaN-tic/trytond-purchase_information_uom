@@ -3,7 +3,7 @@
 from trytond.pool import PoolMeta
 from ..account_invoice_information_uom.invoice import InformationUomMixin
 
-__all__ = ['PurchaseLine']
+__all__ = ['PurchaseLine', 'CreatePurchase']
 
 
 class PurchaseLine(InformationUomMixin, metaclass=PoolMeta):
@@ -18,3 +18,13 @@ class PurchaseLine(InformationUomMixin, metaclass=PoolMeta):
                 line.info_quantity = self.info_quantity
                 line.info_unit_price = self.info_unit_price
         return lines
+
+
+class CreatePurchase(metaclass=PoolMeta):
+    __name__ = 'purchase.request.create_purchase'
+
+    @classmethod
+    def compute_purchase_line(cls, key, requests, purchase):
+        line = super().compute_purchase_line(key, requests, purchase)
+        line.on_change_unit_price()
+        return line
