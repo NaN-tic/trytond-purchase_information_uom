@@ -2,3 +2,5 @@
 # copyright notices and license terms.
 
 from .test_purchase_information_uom import suite
+
+__all__ = ['suite']
