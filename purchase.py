@@ -99,7 +99,8 @@ class ProductSupplierPrice(metaclass=PoolMeta):
             return self.product.template.info_unit.id
         return None
 
-    @fields.depends('product', 'quantity', 'uom')
+    @fields.depends('product', 'product_supplier',
+        '_parent_product_supplier.product', 'quantity', 'uom')
     def on_change_with_info_quantity(self, name=None):
         if not self.product or not self.quantity:
             return
@@ -112,14 +113,16 @@ class ProductSupplierPrice(metaclass=PoolMeta):
         qty = self.product.template.calc_quantity(self.info_quantity, self.uom)
         self.quantity = float(qty)
 
-    @fields.depends('product', 'unit_price', 'product', 'info_unit')
+    @fields.depends('product', 'product_supplier', 'unit_price', 'product',
+        'info_unit', '_parent_product_supplier.product')
     def on_change_with_info_unit_price(self, name=None):
         if not self.product or not self.unit_price:
             return
         return self.product.template.get_info_unit_price(
             self.unit_price, self.info_unit)
 
-    @fields.depends('product', 'info_unit_price', 'uom')
+    @fields.depends('product', 'product_supplier',
+        '_parent_product_supplier.product', 'info_unit_price', 'uom')
     def on_change_info_unit_price(self):
         if not self.product or not self.info_unit_price:
             return
@@ -129,14 +132,16 @@ class ProductSupplierPrice(metaclass=PoolMeta):
             self.gross_unit_price = self.unit_price
             self.discount = Decimal('0.0')
 
-    @fields.depends('product', 'quantity', 'uom')
+    @fields.depends('product', 'quantity', 'uom', 'product_supplier',
+        '_parent_product_supplier.product')
     def on_change_quantity(self):
         if not self.product:
             return
         qty = self.product.template.calc_info_quantity(self.quantity, self.uom)
         self.info_quantity = float(qty)
 
-    @fields.depends('product', 'unit_price', 'info_unit')
+    @fields.depends('product', 'unit_price', 'info_unit', 'product_supplier',
+        '_parent_product_supplier.product')
     def on_change_unit_price(self):
         if not self.product:
             return
