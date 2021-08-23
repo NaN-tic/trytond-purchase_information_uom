@@ -62,8 +62,6 @@ class ProductSupplierPrice(metaclass=PoolMeta):
             'invisible': ~Bool(Eval('show_info_unit')),
             },
         depends=['show_info_unit'])
-    currency_digits = fields.Function(fields.Integer('Currency Digits'),
-        'on_change_with_currency_digits')
     product = fields.Function(fields.Many2One('product.product', 'Product'),
         'on_change_with_product')
 
@@ -71,10 +69,6 @@ class ProductSupplierPrice(metaclass=PoolMeta):
     def on_change_with_product(self, name=None):
         return (self.product_supplier and self.product_supplier.product and
             self.product_supplier.product.id)
-
-    @fields.depends('product_supplier', '_parent_product_supplier.product')
-    def on_change_with_currency_digits(self, name=None):
-        return 2
 
     @staticmethod
     def default_info_unit_digits():
