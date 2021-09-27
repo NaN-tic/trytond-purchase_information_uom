@@ -3,7 +3,7 @@
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Bool
-from ..account_invoice_information_uom.invoice import InformationUomMixin
+from trytond.modules.account_invoice_information_uom.invoice import InformationUomMixin
 from trytond.modules.product import price_digits
 from decimal import Decimal
 
