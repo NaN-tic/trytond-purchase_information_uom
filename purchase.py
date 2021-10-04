@@ -1,7 +1,7 @@
 # The COPYRIGHT file at the top level of this repository contains the full
 # copyright notices and license terms.
 from trytond.model import fields
-from trytond.pool import PoolMeta
+from trytond.pool import PoolMeta, Pool
 from trytond.pyson import Eval, Bool
 from trytond.modules.account_invoice_information_uom.invoice import InformationUomMixin
 from trytond.modules.product import price_digits
@@ -103,9 +103,15 @@ class ProductSupplierPrice(metaclass=PoolMeta):
     @fields.depends('product', 'product_supplier',
         '_parent_product_supplier.product', 'quantity', 'uom')
     def on_change_with_info_quantity(self, name=None):
+        Uom = Pool().get('product.uom')
         if not self.product or not self.quantity:
             return
-        return self.product.template.calc_info_quantity(self.quantity, self.uom)
+        quantity = self.quantity
+        if (self.product.template.default_uom !=
+                    self.product.template.purchase_uom):
+            quantity = Uom.compute_qty(self.product.template.purchase_uom,
+                quantity, self.product.template.default_uom)
+        return self.product.template.calc_info_quantity(quantity, self.uom)
 
     @fields.depends('product', 'info_quantity', 'uom',)
     def on_change_info_quantity(self):
@@ -117,10 +123,16 @@ class ProductSupplierPrice(metaclass=PoolMeta):
     @fields.depends('product', 'product_supplier', 'unit_price', 'product',
         'info_unit', '_parent_product_supplier.product')
     def on_change_with_info_unit_price(self, name=None):
+        Uom = Pool().get('product.uom')
         if not self.product or not self.unit_price:
             return
+        price = self.unit_price
+        if (self.product.template.default_uom !=
+                    self.product.template.purchase_uom):
+            price = Uom.compute_price(self.product.template.purchase_uom, price,
+                self.product.template.default_uom)
         return self.product.template.get_info_unit_price(
-            self.unit_price, self.info_unit)
+            price, self.info_unit)
 
     @fields.depends('product', 'product_supplier',
         '_parent_product_supplier.product', 'info_unit_price', 'uom')
