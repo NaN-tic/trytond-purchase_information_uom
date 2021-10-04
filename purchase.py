@@ -88,14 +88,17 @@ class ProductSupplierPrice(metaclass=PoolMeta):
                     self.product.template.purchase_uom):
             quantity = Uom.compute_qty(self.product.template.purchase_uom,
                 quantity, self.product.template.default_uom)
-        return self.product.template.calc_info_quantity(quantity, self.uom)
+        qty = self.product.template.calc_info_quantity(quantity, self.uom)
+        info_uom = self.product.template.info_unit
+        return info_uom.round(qty)
 
     @fields.depends('product', 'info_quantity', 'uom',)
     def on_change_info_quantity(self):
         if not self.product:
             return
         qty = self.product.template.calc_quantity(self.info_quantity, self.uom)
-        self.quantity = float(qty)
+        uom = self.product.template.purchase_uom
+        self.quantity = uom.round(qty)
 
     @fields.depends('product', 'product_supplier', 'unit_price', 'product',
         'info_unit', '_parent_product_supplier.product')
@@ -128,7 +131,8 @@ class ProductSupplierPrice(metaclass=PoolMeta):
         if not self.product:
             return
         qty = self.product.template.calc_info_quantity(self.quantity, self.uom)
-        self.info_quantity = float(qty)
+        info_uom = self.product.template.info_unit
+        self.info_quantity = info_uom.round(qty)
 
     @fields.depends('product', 'unit_price', 'info_unit', 'product_supplier',
         '_parent_product_supplier.product')
