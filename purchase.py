@@ -69,6 +69,8 @@ class ProductSupplierPrice(metaclass=PoolMeta):
     def on_change_with_show_info_unit(self, name=None):
         if self.product and self.product.template.use_info_unit:
             return True
+        if ps and ps.template and ps.template.use_info_unit:
+            return True
         return False
 
     @fields.depends('product')
