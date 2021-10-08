@@ -92,6 +92,8 @@ class ProductSupplierPrice(metaclass=PoolMeta):
         ps = self.product_supplier
         if ps and ps.product and ps.product.template.use_info_unit:
             return True
+        if ps and ps.template and ps.template.use_info_unit:
+            return True
         return False
 
     @fields.depends('product')
