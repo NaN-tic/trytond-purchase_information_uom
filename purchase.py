@@ -122,16 +122,18 @@ class ProductSupplierPrice(metaclass=PoolMeta):
                     self.product.template.purchase_uom):
             price = Uom.compute_price(self.product.template.purchase_uom, price,
                 self.product.template.default_uom)
-        return self.product.template.get_info_unit_price(
-            price, self.info_unit)
+        DIGITS=price_digits[1]
+        return round(self.product.template.get_info_unit_price(
+            price, self.info_unit), DIGITS)
 
     @fields.depends('product', 'product_supplier',
         '_parent_product_supplier.product', 'info_unit_price', 'uom')
     def on_change_info_unit_price(self):
         if not self.product or not self.info_unit_price:
             return
-        self.unit_price = self.product.template.get_unit_price(
-            self.info_unit_price, unit=self.uom)
+        DIGITS=price_digits[1]
+        self.unit_price = round(self.product.template.get_unit_price(
+            self.info_unit_price, unit=self.uom), DIGITS)
         if hasattr(self, 'gross_unit_price'):
             self.gross_unit_price = self.unit_price
             self.discount = Decimal('0.0')
