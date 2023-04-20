@@ -28,6 +28,18 @@ class PurchaseLine(InformationUomMixin, metaclass=PoolMeta):
                 line.info_unit_price = self.info_unit_price
         return lines
 
+    @fields.depends(methods=['on_change_product','on_change_with_show_info_unit',
+        'on_change_with_info_unit', 'on_change_with_info_unit_digits',
+        'on_change_with_info_quantity', 'on_change_with_info_unit_price'])
+    def on_change_product_supplier(self):
+        super().on_change_product_supplier()
+        self.on_change_product()
+        self.show_info_unit = self.on_change_with_show_info_unit()
+        self.info_unit = self.on_change_with_info_unit()
+        self.info_unit_digits = self.on_change_with_info_unit_digits()
+        self.info_quantity = self.on_change_with_info_quantity()
+        self.info_unit_price = self.on_change_with_info_unit_price()
+
 
 class CreatePurchase(metaclass=PoolMeta):
     __name__ = 'purchase.request.create_purchase'
