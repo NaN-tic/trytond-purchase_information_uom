@@ -145,6 +145,7 @@ Purchase 5 products::
     >>> purchase.lines.append(purchase_line)
     >>> purchase_line.product = product
     >>> purchase_line.quantity = 2.0
+    >>> purchase_line.unit_price = product.cost_price
     >>> purchase_line.show_info_unit
     True
     >>> purchase_line.unit_price == Decimal('20')
