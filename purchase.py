@@ -120,6 +120,7 @@ class ProductSupplierPrice(metaclass=PoolMeta):
         Uom = Pool().get('product.uom')
         if not self.product or not self.quantity or not self.show_info_unit:
             return
+
         quantity = self.quantity
         if (self.product.template.default_uom !=
                     self.product.template.purchase_uom):
@@ -134,6 +135,7 @@ class ProductSupplierPrice(metaclass=PoolMeta):
     def on_change_with_quantity(self):
         if not self.product or not self.info_quantity or not self.show_info_unit:
             return
+
         qty = self.product.template.calc_info_quantity(self.info_quantity, self.uom)
         uom = self.product.template.purchase_uom
         return uom.round(qty)
@@ -150,6 +152,7 @@ class ProductSupplierPrice(metaclass=PoolMeta):
         'info_unit', '_parent_product_supplier.product')
     def on_change_with_info_unit_price(self, name=None):
         Uom = Pool().get('product.uom')
+
         if not self.product or not self.unit_price:
             return
         price = self.unit_price
@@ -157,18 +160,22 @@ class ProductSupplierPrice(metaclass=PoolMeta):
                     self.product.template.purchase_uom):
             price = Uom.compute_price(self.product.template.purchase_uom, price,
                 self.product.template.default_uom)
-        DIGITS=price_digits[1]
-        return round(self.product.template.get_info_unit_price(
-            price, self.info_unit), DIGITS)
+
+        digits = self.__class__.info_unit_price.digits
+        return self.product.template.get_info_unit_price(
+            price, self.info_unit).quantize(Decimal(str(10 ** -digits[1])))
 
     @fields.depends('product', 'product_supplier',
         '_parent_product_supplier.product', 'info_unit_price', 'uom')
     def on_change_info_unit_price(self):
         if not self.product or not self.info_unit_price:
             return
-        DIGITS=price_digits[1]
-        self.unit_price = round(self.product.template.get_unit_price(
-            self.info_unit_price, unit=self.uom), DIGITS)
+
+        digits = self.__class__.info_unit_price.digits
+        self.unit_price = self.product.template.get_unit_price(
+            self.info_unit_price, unit=self.unit).quantize(
+            Decimal(str(10 ** -digits[1])))
+
         if hasattr(self, 'gross_unit_price'):
             self.gross_unit_price = self.unit_price
             self.discount = Decimal('0.0')
@@ -178,8 +185,8 @@ class ProductSupplierPrice(metaclass=PoolMeta):
     def on_change_quantity(self):
         if not self.product:
             return
+
         qty = self.product.template.calc_info_quantity(self.quantity, self.uom)
         if self.show_info_unit:
             info_uom = self.product.template.info_unit
             self.info_quantity = info_uom.round(qty or 0)
-
