@@ -12,7 +12,6 @@ __all__ = ['PurchaseLine', 'CreatePurchase']
 STATES = {
     'invisible': ~Bool(Eval('show_info_unit')),
     }
-DEPENDS = ['show_info_unit']
 
 
 class PurchaseLine(InformationUomMixin, metaclass=PoolMeta):
@@ -56,18 +55,17 @@ class ProductSupplierPrice(metaclass=PoolMeta):
     show_info_unit = fields.Function(fields.Boolean('Show Information UOM'),
         'on_change_with_show_info_unit')
     info_unit = fields.Function(fields.Many2One('product.uom',
-            'Information UOM', states=STATES, depends=DEPENDS),
+            'Information UOM', states=STATES),
         'on_change_with_info_unit')
     info_quantity = fields.Float('Information Quantity',
         digits='info_unit', states={
             'invisible': ~Bool(Eval('show_info_unit')),
-        }, depends=['show_info_unit'])
+        })
     info_unit_price = fields.Numeric('Information Unit Price',
         digits=price_digits,
         states={
             'invisible': ~Bool(Eval('show_info_unit')),
-            },
-        depends=['show_info_unit'])
+            })
     product = fields.Function(fields.Many2One('product.product', 'Product'),
         'on_change_with_product')
 
