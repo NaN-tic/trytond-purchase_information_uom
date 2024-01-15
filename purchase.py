@@ -173,7 +173,7 @@ class ProductSupplierPrice(metaclass=PoolMeta):
 
         digits = self.__class__.info_unit_price.digits
         self.unit_price = self.product.template.get_unit_price(
-            self.info_unit_price, unit=self.unit).quantize(
+            self.info_unit_price, unit=self.uom).quantize(
             Decimal(str(10 ** -digits[1])))
 
         if hasattr(self, 'gross_unit_price'):
