@@ -153,7 +153,7 @@ class ProductSupplierPrice(metaclass=PoolMeta):
 
         if hasattr(self, 'gross_unit_price'):
             self.gross_unit_price = self.unit_price
-            self.discount = Decimal('0.0')
+            self.discount = Decimal(0)
 
     @fields.depends('product', 'quantity', 'unit', 'product_supplier',
         '_parent_product_supplier.product', 'show_info_unit')
