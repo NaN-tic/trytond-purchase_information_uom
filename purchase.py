@@ -151,10 +151,6 @@ class ProductSupplierPrice(metaclass=PoolMeta):
             self.info_unit_price, unit=self.uom).quantize(
             Decimal(str(10 ** -digits[1])))
 
-        if hasattr(self, 'gross_unit_price'):
-            self.gross_unit_price = self.unit_price
-            self.discount = Decimal(0)
-
     @fields.depends('product', 'quantity', 'unit', 'product_supplier',
         '_parent_product_supplier.product', 'show_info_unit')
     def on_change_quantity(self):
