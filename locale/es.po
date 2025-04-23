@@ -2,14 +2,6 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "field:purchase.line,currency_digits:"
-msgid "Currency Digits"
-msgstr "Decimales de moneda"
-
-msgctxt "field:purchase.line,info_amount:"
-msgid "Information Amount"
-msgstr "Import UdM Informativa"
-
 msgctxt "field:purchase.line,info_quantity:"
 msgid "Information Quantity"
 msgstr "Cantidad UdM Informativa"
@@ -25,6 +17,26 @@ msgstr "Precio unitario UdM Informativa"
 msgctxt "field:purchase.line,show_info_unit:"
 msgid "Show Information UOM"
 msgstr "Mostrar UdM Informativa"
+
+msgctxt "field:purchase.product_supplier.price,info_quantity:"
+msgid "Information Quantity"
+msgstr "Cantidad de información"
+
+msgctxt "field:purchase.product_supplier.price,info_unit:"
+msgid "Information UOM"
+msgstr "Información UOM"
+
+msgctxt "field:purchase.product_supplier.price,info_unit_price:"
+msgid "Information Unit Price"
+msgstr "Precio unitario de información"
+
+msgctxt "field:purchase.product_supplier.price,product:"
+msgid "Product"
+msgstr "Producto"
+
+msgctxt "field:purchase.product_supplier.price,show_info_unit:"
+msgid "Show Information UOM"
+msgstr "Mostrar información UOM"
 
 msgctxt "selection:purchase.line,purchase_state:"
 msgid "Canceled"
