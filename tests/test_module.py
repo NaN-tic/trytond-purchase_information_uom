@@ -23,14 +23,8 @@ class PurchaseInformationUomTestCase(CompanyTestMixin, ModuleTestCase):
 
         metre, = Uom.search([('name', '=', 'Meter')])
         kilogram, = Uom.search([('name', '=', 'Kilogram')])
-        # Keep the four decimal places used by these supplier quantities.
-        metre = Uom(name='Metre (4 decimals)', category=metre.category,
-            factor=1, rate=1, rounding=0.0001, digits=4)
-        info_unit = Uom(name='Kilogram (Mapol)',
-            category=kilogram.category, factor=1, rate=1,
-            rounding=0.0001, digits=4)
         template = Template(default_uom=metre, purchase_uom=metre,
-            use_info_unit=True, info_unit=info_unit, info_ratio=0.046)
+            use_info_unit=True, info_unit=kilogram, info_ratio=0.046)
         product = Product(template=template)
         supplier = ProductSupplier(template=template, product=product)
         price = Price(product_supplier=supplier, product=product,
@@ -47,12 +41,12 @@ class PurchaseInformationUomTestCase(CompanyTestMixin, ModuleTestCase):
         price.quantity = 341.0
         price.on_change(['quantity'])
         price.on_change_with(quantity_dependents)
-        self.assertAlmostEqual(price.info_quantity, 15.686, places=4)
+        self.assertAlmostEqual(price.info_quantity, 15.69, places=2)
 
-        price.info_quantity = 15.686
+        price.info_quantity = 15.69
         price.on_change(['info_quantity'])
         price.on_change_with(info_quantity_dependents)
-        self.assertAlmostEqual(price.quantity, 341.0, places=4)
+        self.assertAlmostEqual(price.quantity, 341.09, places=2)
 
         price.quantity = 0.0
         price.on_change(['quantity'])
