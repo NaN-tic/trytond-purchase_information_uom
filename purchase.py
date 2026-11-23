@@ -88,32 +88,6 @@ class ProductSupplierPrice(metaclass=PoolMeta):
             return self.product.template.info_unit.id
         return None
 
-    @fields.depends('product', 'product_supplier', 'show_info_unit',
-        '_parent_product_supplier.product', 'quantity', 'unit')
-    def on_change_with_info_quantity(self, name=None):
-        Uom = Pool().get('product.uom')
-        if not self.product or not self.quantity or not self.show_info_unit:
-            return
-
-        quantity = self.quantity
-        if (self.product.template.default_uom !=
-                    self.product.template.purchase_uom):
-            quantity = Uom.compute_qty(self.product.template.purchase_uom,
-                quantity, self.product.template.default_uom)
-        qty = self.product.template.calc_quantity(quantity, self.unit)
-        info_uom = self.product.template.info_unit
-        return info_uom.round(qty)
-
-    @fields.depends('product', 'product_supplier', 'show_info_unit', 'info_quantity', 'unit',
-        '_parent_product_supplier.product', )
-    def on_change_with_quantity(self):
-        if not self.product or not self.info_quantity or not self.show_info_unit:
-            return
-
-        qty = self.product.template.calc_info_quantity(self.info_quantity, self.unit)
-        uom = self.product.template.purchase_uom
-        return uom.round(qty)
-
     @fields.depends('product', 'info_quantity', 'unit')
     def on_change_info_quantity(self):
         if not self.product:
@@ -161,3 +135,7 @@ class ProductSupplierPrice(metaclass=PoolMeta):
         if self.show_info_unit:
             info_uom = self.product.template.info_unit
             self.info_quantity = info_uom.round(qty or 0)
+
+    @fields.depends(methods=['on_change_quantity'])
+    def on_change_unit(self):
+        self.on_change_quantity()
